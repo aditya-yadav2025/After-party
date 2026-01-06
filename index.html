@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AAKHRI SALAM — Farewell</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+body{overflow:hidden;background:#000;cursor:none;}
+
+/* ===== ENHANCED BACKGROUND ===== */
+.enhanced-bg{
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  filter:contrast(1.2) saturate(1.25) brightness(1.05);
+}
+
+/* ===== STAGE CONTAINER ===== */
+.stage{
+  position:absolute;
+  width:100%;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  transition:opacity 1s ease, transform 1s ease;
+}
+.hidden{opacity:0;pointer-events:none;transform:scale(1.03);}
+
+/* ===== BUTTON STYLE (Pink + Black Text) ===== */
+button{
+  margin-top:22px;
+  padding:14px 40px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  background:#ff4fa6;
+  color:#000;
+  box-shadow:0 8px 22px rgba(0,0,0,.35);
+  transition:.25s;
+}
+button:hover{
+  transform:translateY(-3px) scale(1.03);
+}
+
+/* ===== STARTING PAGE (STAGE 0) ===== */
+#stage0{
+  background-image:url('https://images.pexels.com/photos/4226733/pexels-photo-4226733.jpeg');
+}
+
+#stage0 h1{
+  font-size:48px;
+  font-family:cursive;
+  color:white;
+  text-shadow:
+    -2px -2px 6px #000,
+     2px -2px 6px #000,
+    -2px  2px 6px #000,
+     2px  2px 6px #000,
+     0 0 16px #000,
+     0 0 28px #000;
+}
+
+/* ===== OTHER STAGE BACKGROUNDS ===== */
+#stage1{background-image:url('https://images.pexels.com/photos/5868960/pexels-photo-5868960.jpeg');}
+#stage2{background-image:url('https://images.pexels.com/photos/1596882/pexels-photo-1596882.jpeg');}
+#stage3{background-image:url('https://images.pexels.com/photos/1587927/pexels-photo-1587927.jpeg');}
+
+#stage1,#stage2,#stage3{
+  background-size:cover;
+  background-position:center;
+  filter:contrast(1.2) saturate(1.2) brightness(1.05);
+}
+
+/* ===== HEADINGS ===== */
+h1{font-size:64px;margin-bottom:20px;font-family:cursive;}
+
+#stage1 h1{
+  color:#8B4513;
+  text-shadow:0 0 6px #deb887,0 0 18px #a0522d;
+  animation:glowBrown 2.4s infinite;
+}
+@keyframes glowBrown{50%{text-shadow:0 0 18px #deb887;}}
+
+#stage2 h1{color:gold;text-shadow:0 0 6px #fff5cc,0 0 18px #ffd700;}
+
+#stage3 h1{
+  color:#fff;
+  text-shadow:0 0 10px #000,0 0 25px #000,0 0 40px #000,2px 2px 8px #000;
+}
+
+/* ===== TEXT ===== */
+p{font-size:20px;margin:6px 0;}
+#stage2 p{color:white;text-shadow:2px 2px 6px #000,0 0 18px #000,0 0 28px #000;}
+#stage3 .details p,#stage3 .quote{color:#fff;text-shadow:2px 2px 6px #000,0 0 14px #000,0 0 25px #000;}
+
+/* ===== ACTION BUTTON WRAPPER ===== */
+.action-buttons{
+  margin-top:35px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  justify-content:center;
+  align-items:center;
+}
+
+/* ===== EMOJI FALLERS ===== */
+.faller{
+  position:fixed;
+  top:-40px;
+  opacity:.95;
+  animation:fall linear forwards;
+  z-index:50;
+  pointer-events:none;
+}
+@keyframes fall{to{transform:translateY(110vh) rotate(60deg);opacity:0;}}
+
+/* ===== CURSOR GOLDEN TRAIL ===== */
+.trail{
+  position:fixed;
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  pointer-events:none;
+  background:gold;
+  box-shadow:0 0 12px gold,0 0 25px gold;
+  opacity:.9;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+}
+
+/* ===== SLIDESHOW ===== */
+#slideshow-stage{
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  overflow:hidden;
+  z-index:7000;
+  background:#000;
+  display:none;
+}
+#slideshow-stage img{
+  position:absolute;
+  width:100%; height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:opacity 1s ease;
+}
+#slideshow-stage img.active{opacity:1;}
+
+#closeShowBtn{
+  position:absolute;
+  bottom:40px;
+  padding:14px 40px;
+  left:50%;
+  transform:translateX(-50%);
+  border-radius:30px;
+  font-size:18px;
+  border:none;
+  cursor:pointer;
+  background:#ff4fa6;
+  color:#000;
+  box-shadow:0 8px 20px rgba(0,0,0,.4);
+}
+</style>
+</head>
+<body>
+
+<!-- ===== AUDIO ===== -->
+<audio id="bg-music" src="Love.mp3" loop></audio>
+
+<!-- Hidden YouTube ambience -->
+<iframe id="yt-audio-player"
+src="https://www.youtube.com/embed/brj4u3BXzKk?autoplay=1&mute=1&loop=1&playlist=brj4u3BXzKk&controls=0&modestbranding=1&playsinline=1"
+frameborder="0" allow="autoplay; encrypted-media"
+style="width:1px;height:1px;opacity:0.01;pointer-events:none;position:fixed;bottom:0;right:0;">
+</iframe>
+
+<script>
+let slideshowInterval=null;
+
+/* ===== MUSIC START ONLY WHEN "WE GO" CLICKED ===== */
+function startMusic(){
+  const bg=document.getElementById("bg-music");
+  bg.volume=0.6;
+  bg.play().catch(()=>{});
+}
+
+/* ===== STAGE SWITCH ===== */
+function goToStage(n){
+  document.querySelectorAll(".stage").forEach(s=>s.classList.add("hidden"));
+  document.getElementById("stage"+n).classList.remove("hidden");
+}
+
+/* ===== CLICK SOUND ===== */
+function playClick(){
+  const ctx=new (window.AudioContext||window.webkitAudioContext)();
+  const osc=ctx.createOscillator();
+  const gain=ctx.createGain();
+  osc.frequency.value=650;
+  gain.gain.setValueAtTime(0.18,ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+0.12);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start();
+  osc.stop(ctx.currentTime+0.12);
+}
+
+document.addEventListener("click",e=>{
+  if(e.target.tagName==="BUTTON") playClick();
+},{capture:true});
+
+/* ===== GLOBAL EMOJI LIBRARY ===== */
+const emojiSet=["❤️","🌸","🧿","👀","👋","✨","🍹","🕺","💃","🪩"];
+
+/* ===== FALL EMOJIS ===== */
+function dropEmojiBurst(x,y){
+  for(let i=0;i<6;i++){
+    const e=document.createElement("div");
+    e.className="faller";
+    e.textContent=emojiSet[Math.floor(Math.random()*emojiSet.length)];
+    const sizes=[18,26,36,44];
+    e.style.fontSize=sizes[Math.floor(Math.random()*sizes.length)]+"px";
+    e.style.left=(x+Math.random()*60-30)+"px";
+    e.style.animationDuration=(6+Math.random()*6)+"s";
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(),15000);
+  }
+}
+
+/* Emojis fall anywhere we click */
+document.addEventListener("click",(e)=>{
+  dropEmojiBurst(e.clientX,e.clientY);
+});
+
+/* ===== AUTOMATIC RAIN TOO ===== */
+setInterval(()=>dropEmojiBurst(Math.random()*window.innerWidth,0),900);
+
+/* ===== GOLDEN CURSOR TRAIL ===== */
+document.addEventListener("mousemove",e=>{
+  const dot=document.createElement("div");
+  dot.className="trail";
+  dot.style.left=e.pageX+"px";
+  dot.style.top=e.pageY+"px";
+  document.body.appendChild(dot);
+  setTimeout(()=>dot.remove(),400);
+});
+
+/* ===== SLIDESHOW ===== */
+let currentSlide=0;
+const slideLinks=[
+ "https://images.pexels.com/photos/35521898/pexels-photo-35521898.jpeg",
+ "https://images.pexels.com/photos/35521897/pexels-photo-35521897.jpeg",
+ "https://images.pexels.com/photos/35521907/pexels-photo-35521907.jpeg",
+ "https://images.pexels.com/photos/35535586/pexels-photo-35535586.png",
+ "https://images.pexels.com/photos/35535587/pexels-photo-35535587.png",
+ "https://images.pexels.com/photos/35535585/pexels-photo-35535585.png",
+ "https://images.pexels.com/photos/35521903/pexels-photo-35521903.jpeg",
+ "https://images.pexels.com/photos/35535685/pexels-photo-35535685.jpeg",
+ "https://images.pexels.com/photos/35535778/pexels-photo-35535778.jpeg",
+ "https://images.pexels.com/photos/35535940/pexels-photo-35535940.jpeg"
+];
+
+function openSlideshow(){
+  let sdiv=document.getElementById("slideshow-stage");
+
+  if(!sdiv){
+    sdiv=document.createElement("div");
+    sdiv.id="slideshow-stage";
+    document.body.appendChild(sdiv);
+
+    slideLinks.forEach((src,index)=>{
+      const img=document.createElement("img");
+      img.src=src;
+      if(index===0) img.classList.add("active");
+      sdiv.appendChild(img);
+    });
+
+    const btn=document.createElement("button");
+    btn.id="closeShowBtn";
+    btn.innerText="Back";
+    btn.onclick=closeSlideshow;
+    sdiv.appendChild(btn);
+  }
+
+  sdiv.style.display="block";
+  startSlideshow();
+}
+
+function startSlideshow(){
+  const imgs=document.querySelectorAll("#slideshow-stage img");
+
+  slideshowInterval=setInterval(()=>{
+    imgs[currentSlide].classList.remove("active");
+    currentSlide=(currentSlide+1)%imgs.length;
+    imgs[currentSlide].classList.add("active");
+  },2500);
+}
+
+function closeSlideshow(){
+  const sdiv=document.getElementById("slideshow-stage");
+  if(slideshowInterval){
+    clearInterval(slideshowInterval);
+    slideshowInterval=null;
+  }
+  sdiv.style.display="none";
+  goToStage(3);
+}
+</script>
+
+
+<!-- ===== STAGE 0 (START PAGE) ===== -->
+<div id="stage0" class="stage enhanced-bg">
+  <h1>Ab Scan Kr hi liya h toh yeh niche button bhi Dba do</h1>
+  <button onclick="startMusic(); goToStage(1)">We Go</button>
+</div>
+
+
+<!-- ===== STAGE 1 ===== -->
+<div id="stage1" class="stage hidden enhanced-bg">
+  <h1>AAKHRI SALAM</h1>
+  <p>From “Mummy, aaj school nahi jaana” said with sleepy eyes,</p>
+  <p>To standing strong, saying goodbye with silent sighs.</p>
+  <p>From tiny steps and careless days,</p>
+  <p>To grown-up dreams in countless ways.</p>
+  <p>We laughed, we learned, we fell, we grew,</p>
+  <p>School life shaped who we are and who we’ll be too.</p>
+  <p>We’ve grown up — a lot, it’s true,</p>
+  <p>And now we bid this chapter ENDS..</p>
+  <button onclick="goToStage(2)">Next we go</button>
+</div>
+
+
+<!-- ===== STAGE 2 ===== -->
+<div id="stage2" class="stage hidden enhanced-bg">
+  <h1>Memories That Matter 💖</h1>
+  <p>Hum roz bolte the, “Bas school khatam ho jaye.”</p>
+  <p>Par aaj samajh aa raha hai — school hi woh jagah thi jahan sab apna sa lagta tha.</p>
+  <p>Kuch dost permanent ho gaye,</p>
+  <p>Kuch bas memories ban kar reh gaye,</p>
+  <p>Par har ek ne is journey ko special bana diya.</p>
+  <p>Kyuki “picture abhi baaki thi mere dost” —</p>
+  <p>Aur yeh picture yaadein banke zindagi bhar chalne wali hai.</p>
+  <p>Ab life alag directions mein le jaayegi.</p>
+  <p>Different dreams, different paths, different versions of us.</p>
+  <p>Thoda dar hai, thodi excitement hai,</p>
+  <p>Par dil maanta hai — “Yeh waqt bhi guzar jaayega.”</p>
+  <p>Yeh school sirf ek phase nahi tha.</p>
+  <p>Yeh toh ek poora era tha —</p>
+  <p>Jise hum memes mein yaad karenge,</p>
+  <p>Purani photos mein dhoondhenge,</p>
+  <p>Aur kabhi kabhi chupchaap miss karenge.</p>
+  <p><strong>“Kal ho na ho… par yeh yaadein hamesha hongi.”</strong></p>
+  <button onclick="goToStage(3)">More we go</button>
+</div>
+
+
+<!-- ===== STAGE 3 ===== -->
+<div id="stage3" class="stage hidden enhanced-bg">
+  <h1>Farewell After Party 🪩</h1>
+
+  <div class="details">
+    <p><strong>Date:</strong> 31st January 2026</p>
+    <p><strong>Time:</strong> 1:00 PM onwards</p>
+    <p><strong>Venue:</strong> Cosmozin Club & Lounge</p>
+  </div>
+
+  <div class="action-buttons">
+    <button onclick="openSlideshow()">Memorise Lane</button>
+    <button onclick="window.open('https://maps.app.goo.gl/pvQe3S5pVkGgNSxv7','_blank')">Locate</button>
+    <button onclick="goToStage(0)">Home</button>
+  </div>
+
+  <div class="quote" style="margin-top:24px;font-size:18px;font-style:italic;">
+    “We didn’t realize we were making memories — we just knew we were having fun.”
+  </div>
+</div>
+
+</body>
+</html>
