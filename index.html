@@ -16,6 +16,20 @@ body{overflow:hidden;background:#000;cursor:none;}
   filter:contrast(1.2) saturate(1.25) brightness(1.05);
 }
 
+/* ===== FLOATING HEADINGS ===== */
+h1{
+  font-size:64px;
+  margin-bottom:20px;
+  font-family:cursive;
+  animation:floatHead 4s ease-in-out infinite;
+}
+
+@keyframes floatHead{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+  100%{transform:translateY(0);}
+}
+
 /* ===== STAGE CONTAINER ===== */
 .stage{
   position:absolute;
@@ -48,8 +62,9 @@ button:hover{
 }
 
 /* ===== STARTING PAGE (STAGE 0) ===== */
+/* 🔁 Updated background */
 #stage0{
-  background-image:url('https://images.pexels.com/photos/4226733/pexels-photo-4226733.jpeg');
+  background-image:url('https://images.pexels.com/photos/2831794/pexels-photo-2831794.jpeg');
 }
 
 #stage0 h1{
@@ -76,18 +91,20 @@ button:hover{
   filter:contrast(1.2) saturate(1.2) brightness(1.05);
 }
 
-/* ===== HEADINGS ===== */
-h1{font-size:64px;margin-bottom:20px;font-family:cursive;}
-
+/* ===== STAGE 1 HEADING ===== */
+/* 📝 AAKHARI SALAM in normal cursive + floating */
 #stage1 h1{
   color:#8B4513;
   text-shadow:0 0 6px #deb887,0 0 18px #a0522d;
-  animation:glowBrown 2.4s infinite;
 }
-@keyframes glowBrown{50%{text-shadow:0 0 18px #deb887;}}
 
-#stage2 h1{color:gold;text-shadow:0 0 6px #fff5cc,0 0 18px #ffd700;}
+/* ===== STAGE 2 HEADING ===== */
+#stage2 h1{
+  color:gold;
+  text-shadow:0 0 6px #fff5cc,0 0 18px #ffd700;
+}
 
+/* ===== STAGE 3 HEADING ===== */
 #stage3 h1{
   color:#fff;
   text-shadow:0 0 10px #000,0 0 25px #000,0 0 40px #000,2px 2px 8px #000;
@@ -173,7 +190,6 @@ p{font-size:20px;margin:6px 0;}
 <!-- ===== AUDIO ===== -->
 <audio id="bg-music" src="Love.mp3" loop></audio>
 
-<!-- Hidden YouTube ambience -->
 <iframe id="yt-audio-player"
 src="https://www.youtube.com/embed/brj4u3BXzKk?autoplay=1&mute=1&loop=1&playlist=brj4u3BXzKk&controls=0&modestbranding=1&playsinline=1"
 frameborder="0" allow="autoplay; encrypted-media"
@@ -183,7 +199,6 @@ style="width:1px;height:1px;opacity:0.01;pointer-events:none;position:fixed;bott
 <script>
 let slideshowInterval=null;
 
-/* ===== MUSIC START ONLY WHEN "WE GO" CLICKED ===== */
 function startMusic(){
   const bg=document.getElementById("bg-music");
   bg.volume=0.6;
@@ -231,12 +246,10 @@ function dropEmojiBurst(x,y){
   }
 }
 
-/* Emojis fall anywhere we click */
 document.addEventListener("click",(e)=>{
   dropEmojiBurst(e.clientX,e.clientY);
 });
 
-/* ===== AUTOMATIC RAIN TOO ===== */
 setInterval(()=>dropEmojiBurst(Math.random()*window.innerWidth,0),900);
 
 /* ===== GOLDEN CURSOR TRAIL ===== */
@@ -314,14 +327,14 @@ function closeSlideshow(){
 
 <!-- ===== STAGE 0 (START PAGE) ===== -->
 <div id="stage0" class="stage enhanced-bg">
-  <h1>Ab Scan Kr hi liya h toh yeh niche button bhi Dba do</h1>
+  <h1>Ab Scan Kr Hi liya h toh niche Button bhi dba dijiye ❤️</h1>
   <button onclick="startMusic(); goToStage(1)">We Go</button>
 </div>
 
 
 <!-- ===== STAGE 1 ===== -->
 <div id="stage1" class="stage hidden enhanced-bg">
-  <h1>AAKHRI SALAM</h1>
+  <h1>AAKHARI SALAM</h1>
   <p>From “Mummy, aaj school nahi jaana” said with sleepy eyes,</p>
   <p>To standing strong, saying goodbye with silent sighs.</p>
   <p>From tiny steps and careless days,</p>
@@ -363,7 +376,7 @@ function closeSlideshow(){
   <h1>Farewell After Party 🪩</h1>
 
   <div class="details">
-    <p><strong>Date:</strong> 31st January 2026</p>
+    <p><strong>Date:</strong> 1st Febuary 2026</p>
     <p><strong>Time:</strong> 1:00 PM onwards</p>
     <p><strong>Venue:</strong> Cosmozin Club & Lounge</p>
   </div>
