@@ -8,6 +8,7 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
 body{overflow:hidden;background:#000;cursor:none;}
 
+/* ===== ENHANCED BACKGROUND ===== */
 .enhanced-bg{
   background-size:cover;
   background-position:center;
@@ -15,6 +16,7 @@ body{overflow:hidden;background:#000;cursor:none;}
   filter:contrast(1.2) saturate(1.25) brightness(1.05);
 }
 
+/* ===== FLOATING HEADINGS ===== */
 h1{
   font-size:64px;
   margin-bottom:20px;
@@ -27,6 +29,7 @@ h1{
   100%{transform:translateY(0);}
 }
 
+/* ===== STAGE ===== */
 .stage{
   position:absolute;
   width:100%;
@@ -40,6 +43,7 @@ h1{
 }
 .hidden{opacity:0;pointer-events:none;transform:scale(1.03);}
 
+/* ===== BUTTON ===== */
 button{
   margin-top:16px;
   padding:14px 40px;
@@ -54,19 +58,42 @@ button{
 }
 button:hover{transform:translateY(-3px) scale(1.03);}
 
+/* ===== INSTAGRAM BUTTON ===== */
 .insta-btn{
   background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
   color:#fff;
   font-weight:600;
+  letter-spacing:.5px;
+  box-shadow:0 12px 30px rgba(214,41,118,.6);
+}
+.insta-btn:hover{
+  transform:translateY(-4px) scale(1.05);
 }
 
+/* ===== STAGE BACKGROUNDS ===== */
 #stage0{background-image:url('https://images.pexels.com/photos/2831794/pexels-photo-2831794.jpeg');}
 #stage1{background-image:url('https://images.pexels.com/photos/5868960/pexels-photo-5868960.jpeg');}
 #stage2{background-image:url('https://images.pexels.com/photos/1596882/pexels-photo-1596882.jpeg');}
 #stage3{background-image:url('https://images.pexels.com/photos/1587927/pexels-photo-1587927.jpeg');}
 
-p{font-size:20px;margin:6px 0;color:white;text-shadow:2px 2px 6px #000;}
+#stage0 h1{
+  font-size:48px;
+  color:white;
+  text-shadow:0 0 25px #000;
+}
 
+#stage1 h1{color:#8B4513;text-shadow:0 0 18px #deb887;}
+#stage2 h1{color:gold;text-shadow:0 0 18px gold;}
+#stage3 h1{color:white;text-shadow:0 0 25px #000;}
+
+p{
+  font-size:20px;
+  margin:6px 0;
+  color:white;
+  text-shadow:2px 2px 6px #000;
+}
+
+/* ===== ACTION BUTTONS ===== */
 .action-buttons{
   margin-top:30px;
   display:flex;
@@ -74,6 +101,28 @@ p{font-size:20px;margin:6px 0;color:white;text-shadow:2px 2px 6px #000;}
   gap:14px;
 }
 
+/* ===== EMOJI FALL ===== */
+.faller{
+  position:fixed;
+  top:-40px;
+  animation:fall linear forwards;
+  z-index:50;
+}
+@keyframes fall{to{transform:translateY(110vh) rotate(60deg);opacity:0;}}
+
+/* ===== CURSOR TRAIL ===== */
+.trail{
+  position:fixed;
+  width:12px;height:12px;
+  border-radius:50%;
+  background:gold;
+  box-shadow:0 0 12px gold,0 0 25px gold;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+}
+
+/* ===== SLIDESHOW ===== */
 #slideshow-stage{
   position:absolute;
   top:0;left:0;
@@ -81,7 +130,6 @@ p{font-size:20px;margin:6px 0;color:white;text-shadow:2px 2px 6px #000;}
   background:#000;
   display:none;
   z-index:999;
-  cursor:pointer;
 }
 #slideshow-stage img{
   position:absolute;
@@ -109,12 +157,38 @@ p{font-size:20px;margin:6px 0;color:white;text-shadow:2px 2px 6px #000;}
 function startMusic(){
   document.getElementById("bg-music").play().catch(()=>{});
 }
+
 function goToStage(n){
   document.querySelectorAll(".stage").forEach(s=>s.classList.add("hidden"));
   document.getElementById("stage"+n).classList.remove("hidden");
 }
 
-/* ===== SLIDESHOW IMAGES ===== */
+/* ===== EMOJI ===== */
+const emojiSet=["❤️","✨","🪩","🌸","💃","🕺"];
+document.addEventListener("click",e=>{
+  for(let i=0;i<5;i++){
+    let el=document.createElement("div");
+    el.className="faller";
+    el.textContent=emojiSet[Math.floor(Math.random()*emojiSet.length)];
+    el.style.left=(e.clientX+Math.random()*40-20)+"px";
+    el.style.fontSize=(18+Math.random()*30)+"px";
+    el.style.animationDuration=(5+Math.random()*4)+"s";
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),8000);
+  }
+});
+
+/* ===== CURSOR ===== */
+document.addEventListener("mousemove",e=>{
+  let d=document.createElement("div");
+  d.className="trail";
+  d.style.left=e.pageX+"px";
+  d.style.top=e.pageY+"px";
+  document.body.appendChild(d);
+  setTimeout(()=>d.remove(),400);
+});
+
+/* ===== SLIDESHOW ===== */
 let slideLinks=[
  "https://images.pexels.com/photos/35521898/pexels-photo-35521898.jpeg",
  "https://images.pexels.com/photos/35521897/pexels-photo-35521897.jpeg",
@@ -125,31 +199,12 @@ let slideLinks=[
  "https://images.pexels.com/photos/35521903/pexels-photo-35521903.jpeg",
  "https://images.pexels.com/photos/35535685/pexels-photo-35535685.jpeg",
  "https://images.pexels.com/photos/35535778/pexels-photo-35535778.jpeg",
- "https://images.pexels.com/photos/35535940/pexels-photo-35535940.jpeg",
- "https://images.pexels.com/photos/35671102/pexels-photo-35671102.jpeg",
- "https://images.pexels.com/photos/35671103/pexels-photo-35671103.jpeg",
- "https://images.pexels.com/photos/35671101/pexels-photo-35671101.jpeg"
+ "https://images.pexels.com/photos/35535940/pexels-photo-35535940.jpeg"
 ];
 
-function shuffle(arr){
-  for(let i=arr.length-1;i>0;i--){
-    let j=Math.floor(Math.random()*(i+1));
-    [arr[i],arr[j]]=[arr[j],arr[i]];
-  }
-}
-
-let current=0, interval, imgs;
-
-function showNext(){
-  imgs[current].classList.remove("active");
-  current=(current+1)%imgs.length;
-  imgs[current].classList.add("active");
-}
+let current=0,interval;
 
 function openSlideshow(){
-  shuffle(slideLinks);
-  current=0;
-
   let s=document.createElement("div");
   s.id="slideshow-stage";
 
@@ -163,23 +218,18 @@ function openSlideshow(){
   let btn=document.createElement("button");
   btn.id="closeShowBtn";
   btn.innerText="Back";
-  btn.onclick=e=>{
-    e.stopPropagation();
-    clearInterval(interval);
-    s.remove();
-    goToStage(3);
-  };
+  btn.onclick=()=>{clearInterval(interval);s.remove();goToStage(3);}
   s.appendChild(btn);
 
   document.body.appendChild(s);
   s.style.display="block";
 
-  imgs=s.querySelectorAll("img");
-
-  interval=setInterval(showNext,2500);
-
-  /* 👇 TAP TO SKIP PHOTO */
-  s.addEventListener("click",showNext);
+  let imgs=s.querySelectorAll("img");
+  interval=setInterval(()=>{
+    imgs[current].classList.remove("active");
+    current=(current+1)%imgs.length;
+    imgs[current].classList.add("active");
+  },2500);
 }
 </script>
 
@@ -207,6 +257,20 @@ function openSlideshow(){
   <h1>Memories That Matter 💖</h1>
   <p>Hum roz kehte the, “Bas school khatam ho jaye.”</p>
   <p>Par aaj samajh aata hai — school hi woh jagah thi jahan sab apna sa lagta tha.</p>
+  <p>Kuch dost zindagi bhar ke ho gaye,</p>
+  <p>Kuch sirf yaadon mein reh gaye,</p>
+  <p>Par har ek ne is safar ko khaas bana diya.</p>
+  <p>Kyuki “picture abhi baaki thi mere dost” —</p>
+  <p>Aur yeh picture yaadon ban kar zindagi bhar chalne wali hai.</p>
+  <p>Ab zindagi alag raahon par le jaayegi,</p>
+  <p>Alag sapne, alag manzilein, aur hum sab ke naye versions.</p>
+  <p>Thoda sa darr hai, thodi si excitement hai,</p>
+  <p>Par dil maanta hai — “Yeh waqt bhi guzar jaayega.”</p>
+  <p>Yeh school sirf ek phase nahi tha,</p>
+  <p>Yeh toh ek poora era tha —</p>
+  <p>Jise hum memes mein yaad karenge,</p>
+  <p>Purani photos mein dhoondhenge,</p>
+  <p>Aur kabhi-kabhi chupchaap miss karenge.</p>
   <p><strong>“Kal ho na ho… par yeh yaadein hamesha saath rahengi.”</strong></p>
   <button onclick="goToStage(3)">More we go</button>
 </div>
@@ -220,12 +284,17 @@ function openSlideshow(){
 
   <div class="action-buttons">
     <button onclick="openSlideshow()">Memories Lane</button>
+    <button onclick="window.open('https://maps.app.goo.gl/pvQe3S5pVkGgNSxv7','_blank')">Locate</button>
     <button onclick="goToStage(0)">Home</button>
     <button class="insta-btn"
       onclick="window.open('https://www.instagram.com/kvno1_afterparty2k26/','_blank')">
       Instagram
     </button>
   </div>
+
+  <p style="margin-top:22px;font-style:italic;">
+    “Signing off… AAKHRI SALAM.”
+  </p>
 </div>
 
 </body>
