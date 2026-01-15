@@ -58,18 +58,6 @@ button{
 }
 button:hover{transform:translateY(-3px) scale(1.03);}
 
-/* ===== INSTAGRAM BUTTON ===== */
-.insta-btn{
-  background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
-  color:#fff;
-  font-weight:600;
-  letter-spacing:.5px;
-  box-shadow:0 12px 30px rgba(214,41,118,.6);
-}
-.insta-btn:hover{
-  transform:translateY(-4px) scale(1.05);
-}
-
 /* ===== STAGE BACKGROUNDS ===== */
 #stage0{background-image:url('https://images.pexels.com/photos/2831794/pexels-photo-2831794.jpeg');}
 #stage1{background-image:url('https://images.pexels.com/photos/5868960/pexels-photo-5868960.jpeg');}
@@ -81,7 +69,6 @@ button:hover{transform:translateY(-3px) scale(1.03);}
   color:white;
   text-shadow:0 0 25px #000;
 }
-
 #stage1 h1{color:#8B4513;text-shadow:0 0 18px #deb887;}
 #stage2 h1{color:gold;text-shadow:0 0 18px gold;}
 #stage3 h1{color:white;text-shadow:0 0 25px #000;}
@@ -104,11 +91,16 @@ p{
 /* ===== EMOJI FALL ===== */
 .faller{
   position:fixed;
-  top:-40px;
+  top:-50px;
   animation:fall linear forwards;
   z-index:50;
 }
-@keyframes fall{to{transform:translateY(110vh) rotate(60deg);opacity:0;}}
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(120deg);
+    opacity:0;
+  }
+}
 
 /* ===== CURSOR TRAIL ===== */
 .trail{
@@ -163,20 +155,22 @@ function goToStage(n){
   document.getElementById("stage"+n).classList.remove("hidden");
 }
 
-/* ===== EMOJI ===== */
-const emojiSet=["❤️","✨","🪩","🌸","💃","🕺"];
-document.addEventListener("click",e=>{
-  for(let i=0;i<5;i++){
+/* ===== PARTY EMOJI RAIN ===== */
+const emojiSet=["🌸","🌺","💐","🌼","💃","🕺","🎉","✨","🪩"];
+
+function startEmojiRain(){
+  setInterval(()=>{
     let el=document.createElement("div");
     el.className="faller";
     el.textContent=emojiSet[Math.floor(Math.random()*emojiSet.length)];
-    el.style.left=(e.clientX+Math.random()*40-20)+"px";
-    el.style.fontSize=(18+Math.random()*30)+"px";
-    el.style.animationDuration=(5+Math.random()*4)+"s";
+    el.style.left=Math.random()*window.innerWidth+"px";
+    el.style.fontSize=(20+Math.random()*35)+"px";
+    el.style.animationDuration=(6+Math.random()*4)+"s";
     document.body.appendChild(el);
-    setTimeout(()=>el.remove(),8000);
-  }
-});
+    setTimeout(()=>el.remove(),10000);
+  },300);
+}
+startEmojiRain();
 
 /* ===== CURSOR ===== */
 document.addEventListener("mousemove",e=>{
@@ -281,17 +275,13 @@ function openSlideshow(){
   <h1>Farewell After Party 🪩</h1>
 
   <p><strong>Date:</strong> 31st January 2026</p>
-  <p><strong>Time:</strong> 2:00PM To 7:00PM </p>
+  <p><strong>Time:</strong> 2:00 PM onwards</p>
   <p><strong>Venue:</strong> Cosmozin Club & Lounge</p>
 
   <div class="action-buttons">
     <button onclick="openSlideshow()">Memories Lane</button>
     <button onclick="window.open('https://maps.app.goo.gl/pvQe3S5pVkGgNSxv7','_blank')">Locate</button>
     <button onclick="goToStage(0)">Home</button>
-    <button class="insta-btn"
-      onclick="window.open('https://www.instagram.com/kvno1_afterparty2k26/','_blank')">
-      Instagram
-    </button>
   </div>
 
   <p style="margin-top:22px;font-style:italic;">
@@ -301,4 +291,3 @@ function openSlideshow(){
 
 </body>
 </html>
-
